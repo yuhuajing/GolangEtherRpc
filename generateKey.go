@@ -9,7 +9,7 @@ import (
 	"golang.org/x/crypto/sha3"
 )
 
-func generateNode() {
+func generateNode() string {
 	priveKey, _ := crypto.GenerateKey()
 	//privateKeyBytes := crypto.FromECDSA(priveKey)
 	//fmt.Println(hexutil.Encode(privateKeyBytes))
@@ -22,4 +22,5 @@ func generateNode() {
 	hash := sha3.NewLegacyKeccak256()
 	hash.Write(publicKeyBytes[1:])
 	fmt.Println(hexutil.Encode(hash.Sum(nil)[12:]))
+	return address
 }
