@@ -20,18 +20,20 @@ import (
 	"log"
 	"math"
 	"math/big"
+
+	"github.com/ethereum/go-ethereum/common"
 )
 
-func getAddrBalFronLatestBlock() {
-	balance, err := client.BalanceAt(context.Background(), account, nil)
+func getAddrBalFronLatestBlock(addr common.Address) {
+	balance, err := client.BalanceAt(context.Background(), addr, nil)
 	if err != nil {
 		log.Fatal(err)
 	}
 	fmt.Println(balance)
 }
 
-func getAddrBalFronTargetBlock(number *big.Int) {
-	balance, err := client.BalanceAt(context.Background(), account, number)
+func getAddrBalFronTargetBlock(addr common.Address, number *big.Int) {
+	balance, err := client.BalanceAt(context.Background(), addr, number)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -46,7 +48,7 @@ func calcuBalanceToEth(bal *big.Int) {
 	fmt.Println(fbalance)
 }
 
-func getPendingBalance() {
-	balance, _ := client.PendingBalanceAt(context.Background(), account)
+func getPendingBalance(addr common.Address) {
+	balance, _ := client.PendingBalanceAt(context.Background(), addr)
 	fmt.Println(balance)
 }
