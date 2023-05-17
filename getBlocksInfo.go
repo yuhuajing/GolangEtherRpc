@@ -3,31 +3,29 @@ package main
 import (
 	"context"
 	"fmt"
-	"log"
 	"math/big"
 
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/core/types"
-	"github.com/ethereum/go-ethereum/ethclient"
 )
 
-var (
-	client  *ethclient.Client
-	account common.Address
-)
+// var (
+// 	client  *ethclient.Client
+// 	account common.Address
+// )
 
-func init() {
-	client = getConn()
-	account = common.HexToAddress("0x71c7656ec7ab88b098defb751b7401b5f6d8976f")
-}
-func getConn() *ethclient.Client {
-	client, err := ethclient.Dial("https://cloudflare-eth.com")
-	if err != nil {
-		log.Fatal(err)
-	}
-	fmt.Println("we have a connection")
-	return client
-}
+// func init() {
+// 	client = getConn()
+// 	account = common.HexToAddress("0x71c7656ec7ab88b098defb751b7401b5f6d8976f")
+// }
+// func getConn() *ethclient.Client {
+// 	client, err := ethclient.Dial("https://cloudflare-eth.com")
+// 	if err != nil {
+// 		log.Fatal(err)
+// 	}
+// 	fmt.Println("we have a connection")
+// 	return client
+// }
 
 type Bloom [256]byte
 type BlockNonce [8]byte
@@ -66,7 +64,7 @@ type Header struct {
 
 func getLatestBlockHeader() {
 	header, _ := client.HeaderByNumber(context.Background(), nil) //nil for the latest block header
-	fmt.Println(header.ExcessDataGas)
+	fmt.Println(header.BaseFee)
 }
 
 func getTargetBlockHeader(number *big.Int) {
