@@ -13,8 +13,11 @@ import (
 	"golang.org/x/crypto/sha3"
 )
 
-/**
-When we transfer Token by a transaction, we need to target the Token_Contract_Address、To_Address、GasPrice、GasLimit、Nonce and input data including(method、input parameters).
+/*
+The Token Factory Generater page
+https://tokenfactory.surge.sh/#/tokensearchhen
+
+we transfer Token by a transaction, we need to target the Token_Contract_Address、To_Address、GasPrice、GasLimit、Nonce and input data including(method、input parameters).
 1.import the from address by private key or generate a new address
 2.get the address newest nonce value from the pending pool
 3. optinally target the transfer value with wei
