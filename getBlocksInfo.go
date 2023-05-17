@@ -6,7 +6,6 @@ import (
 	"math/big"
 
 	"github.com/ethereum/go-ethereum/common"
-	"github.com/ethereum/go-ethereum/core/types"
 )
 
 // var (
@@ -64,60 +63,25 @@ type Header struct {
 
 func getLatestBlockHeader() {
 	header, _ := client.HeaderByNumber(context.Background(), nil) //nil for the latest block header
-	fmt.Println(header.BaseFee)
+	fmt.Println(header)
 }
 
 func getTargetBlockHeader(number *big.Int) {
 	header, _ := client.HeaderByNumber(context.Background(), number) //nil for the latest block header
-	fmt.Println(header.ExcessDataGas)
+	fmt.Println(header)
+	//	fmt.Println(header.ExcessDataGas)
 
 }
 
 func getLatestBlock() {
-	block, _ := client.BlockByNumber(context.Background(), nil) //nil for the latest block
-
-	test := block.Transactions()[:1]
-	chainID, _ := client.ChainID(context.Background())
-	fmt.Println(chainID)
-	for _, tx := range test { //block.Transactions() {
-		fmt.Println(tx.Hash())
-		signer := types.NewLondonSigner(big.NewInt(1))
-		from, _ := types.Sender(signer, tx)
-		fmt.Println(from)
-	}
-	tint, _ := client.TransactionCount(context.Background(), block.Hash())
-	fmt.Println(tint)
+	getLatestBlockHeader()
+	getTranctionsFromlatestBlock()
 }
 
 func getTargetBlock(number *big.Int) {
-	block, _ := client.BlockByNumber(context.Background(), number)
-	test := block.Transactions()[:1]
-	fmt.Println(test)
+	getTargetBlockHeader(number)
+	getTranctionsFromTargetBlock(number)
+	// block, _ := client.BlockByNumber(context.Background(), number)
+	// test := block.Transactions()[:1]
+	// fmt.Println(test)
 }
-
-// type TxData interface {
-// 	txType() byte // returns the type ID
-// 	copy() TxData // creates a deep copy and initializes all fields
-
-// 	chainID() *big.Int
-// 	accessList() AccessList
-// 	data() []byte
-// 	gas() uint64
-// 	gasPrice() *big.Int
-// 	gasTipCap() *big.Int
-// 	gasFeeCap() *big.Int
-// 	value() *big.Int
-// 	nonce() uint64
-// 	to() *common.Address
-
-// 	rawSignatureValues() (v, r, s *big.Int)
-// 	setSignatureValues(chainID, v, r, s *big.Int)
-
-// 	// effectiveGasPrice computes the gas price paid by the transaction, given
-// 	// the inclusion block baseFee.
-// 	//
-// 	// Unlike other TxData methods, the returned *big.Int should be an independent
-// 	// copy of the computed value, i.e. callers are allowed to mutate the result.
-// 	// Method implementations can use 'dst' to store the result.
-// 	effectiveGasPrice(dst *big.Int, baseFee *big.Int) *big.Int
-// }
