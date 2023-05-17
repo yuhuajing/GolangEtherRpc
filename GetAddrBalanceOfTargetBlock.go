@@ -30,8 +30,8 @@ func getAddrBalFronLatestBlock() {
 	fmt.Println(balance)
 }
 
-func getAddrBalFronTargetBlock() {
-	balance, err := client.BalanceAt(context.Background(), account, big.NewInt(17263443))
+func getAddrBalFronTargetBlock(number *big.Int) {
+	balance, err := client.BalanceAt(context.Background(), account, number)
 	if err != nil {
 		log.Fatal(err)
 	}
