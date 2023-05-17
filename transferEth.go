@@ -4,7 +4,6 @@ import (
 	"context"
 	"crypto/ecdsa"
 	"fmt"
-	"log"
 	"math/big"
 
 	"github.com/ethereum/go-ethereum/common"
@@ -43,11 +42,12 @@ func transferEth() {
 	gasPrice, _ := client.SuggestGasPrice(context.Background())
 	toAddress := common.HexToAddress("0x4592d8f8d7b001e72cb26a73e4fa1806a51ac79d")
 	tx := types.NewTransaction(nonce, toAddress, value, gasLimit, gasPrice, nil)
+
 	chainId, _ := client.ChainID(context.Background())
 	signedTx, _ := types.SignTx(tx, types.NewEIP155Signer(chainId), priKey)
-	err := client.SendTransaction(context.Background(), signedTx)
-	if err != nil {
-		log.Fatal(err)
-	}
+	// err := client.SendTransaction(context.Background(), signedTx)
+	// if err != nil {
+	// 	log.Fatal(err)
+	// }
 	fmt.Printf("tx sent: %s", signedTx.Hash().Hex())
 }
