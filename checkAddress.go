@@ -6,30 +6,30 @@ import (
 	"regexp"
 
 	"github.com/ethereum/go-ethereum/common"
-	"github.com/ethereum/go-ethereum/ethclient"
 )
 
 // check the address whether it is a valid  address
-func checkAddress(addr string) {
+func checkAddress(addr string) bool {
 	// 16 hex 0-f
 	re := regexp.MustCompile("0x[0-9a-fA-F]{40}$")
-	if !re.MatchString(addr) {
-		panic("invalid address")
-	}
+	return re.MatchString(addr)
 }
 
 // check the address whether is a smart contract address
-func checkContractAddress(addr string) {
+func checkContractAddress(addr string) bool {
+	if !checkAddress(addr) {
+		return false
+	}
 	address := common.HexToAddress(addr)
-	client, _ := ethclient.Dial("https://cloudflare-eth.com")
 	bytecode, err := client.CodeAt(context.Background(), address, nil) //nil is the latest block
 	if err != nil {
 		panic(err)
 	}
 	isContract := len(bytecode) > 0
 	if isContract {
-		fmt.Println("SC address")
-	} else {
-		fmt.Println("Normal address")
+		//fmt.Println("SC address")
+		return true
 	}
+	fmt.Println("This is normal address, but we want a smart contract address")
+	return false
 }
