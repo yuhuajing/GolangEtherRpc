@@ -12,14 +12,14 @@ import (
 )
 
 var (
-	client  *ethclient.Client
-	account common.Address
+	client *ethclient.Client
+	//account common.Address
 )
 
 func init() {
 	server := "https://cloudflare-eth.com"
 	client = getConn(server)
-	account = common.HexToAddress("0x71c7656ec7ab88b098defb751b7401b5f6d8976f")
+	//account = common.HexToAddress("0x71c7656ec7ab88b098defb751b7401b5f6d8976f")
 }
 
 func getConn(str string) *ethclient.Client {
@@ -78,6 +78,6 @@ func main() {
 		//	fmt.Printf("nothing provided,get slot 0 of the address %s\n", naddress.Hex())
 		getSCstorage(naddress, slot, blockNum)
 	}
-	getLatestBlockHeader()
+	//getLatestBlockHeader()
 
 }
