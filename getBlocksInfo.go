@@ -6,6 +6,7 @@ import (
 	"math/big"
 
 	"github.com/ethereum/go-ethereum/common"
+	"github.com/ethereum/go-ethereum/core/types"
 )
 
 // var (
@@ -66,9 +67,10 @@ func getLatestBlockHeader() {
 	fmt.Println(header)
 }
 
-func getTargetBlockHeader(number *big.Int) {
+func getTargetBlockHeader(number *big.Int) *types.Header {
 	header, _ := client.HeaderByNumber(context.Background(), number) //nil for the latest block header
-	fmt.Println(header)
+	return header
+	//fmt.Println(header)
 	//	fmt.Println(header.ExcessDataGas)
 
 }
