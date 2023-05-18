@@ -8,16 +8,6 @@ import (
 	"github.com/ethereum/go-ethereum/common"
 )
 
-var (
-	address                 string
-	slot, highslot, lowslot int
-	arrayslot               string
-	//client                  *ethclient.Client
-	//account                 common.Address
-	ethServer string
-	blockNum  int64
-)
-
 func getSCstorage(address common.Address, slot int, blockNum int64) {
 	t := common.BigToHash(big.NewInt(int64(slot)))
 	int256 := new(big.Int)
