@@ -41,11 +41,12 @@ func getAddrBalFronTargetBlock(addr common.Address, number *big.Int) {
 	calcuBalanceToEth(balance)
 }
 
-func calcuBalanceToEth(bal *big.Int) {
+func calcuBalanceToEth(bal *big.Int) *big.Float {
 	fbalance := new(big.Float)
 	fbalance.SetString(bal.String())
 	fbalance = fbalance.Quo(fbalance, big.NewFloat(math.Pow10(18)))
-	fmt.Println(fbalance)
+	return fbalance
+	//fmt.Println(fbalance)
 }
 
 func getPendingBalance(addr common.Address) {
