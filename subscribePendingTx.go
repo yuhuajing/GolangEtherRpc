@@ -95,9 +95,13 @@ func moitorPendingTx() {
 			fmt.Printf("Error:%v\n", err)
 			//log.Fatal(err)
 		case tx := <-pendingTx:
-			fmt.Println(tx.To())
-			// data, _ := tx.MarshalJSON()
-			// fmt.Println(string(data))
+			//fmt.Println(tx.To())
+			//fmt.Println(hex.EncodeToString(tx.Data()))
+			data, _ := tx.MarshalJSON()
+			fmt.Println(string(data))
+			/**
+			{"type":"0x2","chainId":"0x1","nonce":"0x2","to":"0x417a5538c0af25ecea6a7eb87e66d553b34ad9ab","gas":"0x5208","gasPrice":null,"maxPriorityFeePerGas":"0x5f5e100","maxFeePerGas":"0x8a63c4190","value":"0xfd9caec58e1cce","input":"0x","accessList":[],"v":"0x0","r":"0xa878da21c2227d29bb4ae28d19238a80957880a2a04d04467f9aa3bde7dacc24","s":"0x3c267fb8d0348c2cec77d88179635db78055a16ee9da25a2c5d8beb51d8c2460","hash":"0xf3b2eb14180d1876f067c21397684874d22f1fc5b89219fb64868fad56712dec"}
+			**/
 		}
 	}
 }

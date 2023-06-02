@@ -40,6 +40,7 @@ func transferEth() {
 	gasLimit := uint64(21000)
 	//gasPrice := big.NewInt(30000000000) // in wei (30 gwei)
 	gasPrice, _ := client.SuggestGasPrice(context.Background())
+
 	toAddress := common.HexToAddress("0x4592d8f8d7b001e72cb26a73e4fa1806a51ac79d")
 	tx := types.NewTransaction(nonce, toAddress, value, gasLimit, gasPrice, nil)
 

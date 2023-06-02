@@ -3,7 +3,7 @@ module main
 go 1.20
 
 require (
-	github.com/ethereum/go-ethereum v1.11.6
+	github.com/ethereum/go-ethereum v1.12.0
 	golang.org/x/crypto v0.9.0
 )
 
