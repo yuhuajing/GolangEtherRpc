@@ -1,5 +1,7 @@
 # 代理合约
 
+abigen --bin=./wallet.bin --abi=./wallet.abi --pkg=wallet --out=wallet.go
+
 factory.sol: 通过写入字节吗的方式实现代理，将收到的所有数据通过fallback函数 delegate 到代理中去
 
 Wallet.sol: 实现合约，实现工厂合约的实际业务逻辑
