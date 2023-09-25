@@ -80,6 +80,10 @@ func initClient() {
 	}
 	//Reterive pending transactions
 	subgclient = gethclient.New(rpcCli)
+
+	defer func() {
+		rpcCli.Close()
+	}()
 }
 
 func moitorPendingTx() {
