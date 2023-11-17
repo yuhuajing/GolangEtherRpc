@@ -2,47 +2,45 @@ package main
 
 import (
 	"crypto/ecdsa"
+	"fmt"
 	"log"
 
-	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/common/hexutil"
 	"github.com/ethereum/go-ethereum/crypto"
-	"golang.org/x/crypto/sha3"
+	solsha3 "github.com/miguelmota/go-solidity-sha3"
 )
 
 func main() {
+
+	// Parse private key
 	privateKey, err := crypto.HexToECDSA("797391c7bd2e156e52329ceb6471496798e0c125ef35c4c3393329bd2a64f3f5")
-	publicKeyECDSA, _ := privateKey.Public().(*ecdsa.PublicKey)
-	signer := crypto.PubkeyToAddress(*publicKeyECDSA).Hex()
-	log.Println("signer: ", signer)
-
-	ethHash := packetWithEth("Hello, World!")
-	//log.Println("eth hash: ", ethHash.Hex())
-
-	signature, err := crypto.Sign(ethHash.Bytes(), privateKey)
 	if err != nil {
 		log.Fatal(err)
 	}
-	log.Println("signature: ", hexutil.Encode(signature))
-	log.Println("verify: ", verifySig(signer, ethHash.Bytes(), signature))
+	// Sign message
+	signature, err := PersonalSign("Hello, World!", privateKey)
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Println(signature)
 }
 
-func packetWithEth(str string) common.Hash {
-	hash := crypto.Keccak256Hash([]byte(str))
-	return crypto.Keccak256Hash(
-		[]byte("\x19Ethereum Signed Message:\n32"),
-		hash.Bytes(),
+func PersonalSign(message string, privateKey *ecdsa.PrivateKey) (string, error) {
+	mes := solsha3.SoliditySHA3(
+		// types
+		[]string{"string"},
+
+		// values
+		[]interface{}{
+			message,
+		},
 	)
-}
+	hasht := solsha3.SoliditySHA3WithPrefix(mes)
+	signatureBytes, err := crypto.Sign(hasht, privateKey)
 
-func verifySig(signer string, msg []byte, sig []byte) bool {
-
-	pubKey, err := crypto.Ecrecover(msg, sig)
 	if err != nil {
-		log.Fatal(err)
+		return "", err
 	}
-	hash := sha3.NewLegacyKeccak256()
-	hash.Write(pubKey[1:])
-	straddr := common.HexToAddress(hexutil.Encode(hash.Sum(nil)[12:]))
-	return straddr == common.HexToAddress(signer)
+	signatureBytes[64] += 27
+	return hexutil.Encode(signatureBytes), nil
 }
